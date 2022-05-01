@@ -13,34 +13,54 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-function transform(arr) {
-  throw new NotImplementedError('Not implemented');
+ function transform(arr) {
+  //throw new NotImplementedError('Not implemented');
   // remove line with error and write your code here
   if(!(Array.isArray(arr))){
-    throw new Error("'arr' parameter must be an instance of the Array!");
+    throw new Error ("'arr' parameter must be an instance of the Array!");
   }
   else{
     if(arr==[]){
       return [];
     }
     else{
-      let arr2 = arr;
-      for(let i=0;i<arr2.length;i++){
-        if(arr2[i]=='--discard-next'){
-          arr2.splice(i+1,1);
+      let arr2 = [];
+      let k=0;
+      for(let i=0;i<arr.length;i++){
+          if(arr[i]=='--discard-prev'){
+            if(i!=0){
+              if(k-1==arr2.length-1){arr2.pop();}
+              k++;
+          }
+              else{
+                  k++;
+              } 
+          }
+          if(arr[i]=='--discard-next'){
+              k=k+2;
+          }
+          if(arr[i]=='--double-prev'){
+              if(i!=0){
+                if(k-1 == arr2.length-1){arr2.push(arr2[arr2.length-1]);}
+                  k++;
+              }
+              else{
+                  k++;
+              }
+          }
+          if(arr[i]=='--double-next'){
+                arr2.push(arr[i+1]);
+                k++;
         }
-        if(arr2[i]=='--discard-prev'){
-          arr2.splice(i-1,1);
-        }
-        if(arr2[i]=='--double-next'){
-          arr.splice(i+1,0,arr2[i+1]);
-        }
-        if(arr2[i]=='--double-prev'){
-          arr2.splice(i-1,0,arr2[i-1]);
-        }
+          if(arr[i]!='--double-next' && arr[i]!='--double-prev' && arr[i]!='--discard-next' && arr[i]!='--discard-prev'){
+              if(k==i){
+                  arr2.push(arr[i]);
+                  k++;}
+          }
       }
+      return arr2;
     }
-  return arr2;
+  
   }
   
 }
