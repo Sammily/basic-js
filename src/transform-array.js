@@ -49,7 +49,9 @@ const { NotImplementedError } = require('../extensions/index.js');
               }
           }
           if(arr[i]=='--double-next'){
-                arr2.push(arr[i+1]);
+            if(arr[i+1]){
+              arr2.push(arr[i+1]);}
+                
                 k++;
         }
           if(arr[i]!='--double-next' && arr[i]!='--double-prev' && arr[i]!='--discard-next' && arr[i]!='--discard-prev'){
@@ -60,9 +62,7 @@ const { NotImplementedError } = require('../extensions/index.js');
       }
       return arr2;
     }
-  
   }
-  
 }
 
 module.exports = {
